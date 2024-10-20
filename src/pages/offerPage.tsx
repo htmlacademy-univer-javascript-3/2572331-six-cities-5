@@ -1,4 +1,4 @@
-export function CreateOfferPage() {
+export function CreateOfferPage(): JSX.Element {
   return(
     <div className="page">
       <header className="header">

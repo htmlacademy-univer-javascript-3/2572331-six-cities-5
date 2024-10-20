@@ -1,4 +1,4 @@
-export function CraeteFavoritesEmptyPage() {
+export function CreateFavoritesEmptyPage(): JSX.Element {
   return(
     <div className="page page--favorites-empty">
       <header className="header">
