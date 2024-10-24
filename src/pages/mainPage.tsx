@@ -4,7 +4,7 @@ type MainPageProps = {
   placeCardsCount: number;
 }
 
-export function CreateMainPage({placeCardsCount} : MainPageProps) {
+export function CreateMainPage({placeCardsCount} : MainPageProps): JSX.Element {
   return(
     <div className="page page--gray page--main">
       <header className="header">

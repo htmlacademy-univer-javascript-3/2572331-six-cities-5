@@ -8,7 +8,7 @@ type PlaceCardsProps = {
   rating: number;
 }
 
-export function CreatePlaceCard({imageSource, isPremium, costPerNight, placeCardName, placeCardType, isBookmarked, rating} : PlaceCardsProps) {
+export function CreatePlaceCard({imageSource, isPremium, costPerNight, placeCardName, placeCardType, isBookmarked, rating} : PlaceCardsProps): JSX.Element {
   return(
     <article className="cities__card place-card">
       {isPremium ?
