@@ -10,5 +10,5 @@ export function CreateNotFoundPage(): JSX.Element {
       </h1>
       <Link to='/' style={{ color: '#4481C3' }}>Go to main page</Link>
     </div>
-  )
+  );
 }
