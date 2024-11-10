@@ -1,33 +1,33 @@
-type PlaceCardsProps = {
-  imageSource: string;
-  isPremium: boolean;
-  costPerNight: number;
-  placeCardName: string;
-  placeCardType: string;
-  isBookmarked: boolean;
-  rating: number;
+import { Dispatch, SetStateAction } from 'react';
+import { Offer } from '../../props/offer';
+import { Link } from 'react-router-dom';
+
+type OfferProps = {
+  offer: Offer;
+  setCurrentPointedOffer: Dispatch<SetStateAction<string | null>>;
+  favoritesOnly: boolean;
 }
 
-export function CreatePlaceCard({imageSource, isPremium, costPerNight, placeCardName, placeCardType, isBookmarked, rating} : PlaceCardsProps): JSX.Element {
+export function CreateOffer({offer, setCurrentPointedOffer, favoritesOnly} : OfferProps) {
   return(
-    <article className="cities__card place-card">
-      {isPremium ?
+    <article className={`${!favoritesOnly ? 'cities' : 'favorites'}__card place-card`} onMouseOver={() => setCurrentPointedOffer(offer.id)}>
+      {offer.isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
         : null}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${!favoritesOnly ? 'cities' : 'favorites'}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src={imageSource} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={offer.previewImageSource} width={!favoritesOnly ? '260' : '150'} height={!favoritesOnly ? '200' : '110'} alt="Place image"/>
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${!favoritesOnly ? '' : 'favorites__card-info '}place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{costPerNight}</b>
+            <b className="place-card__price-value">&euro;{offer.costPerNight}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          {isBookmarked ?
+          {offer.isFavorite ?
             <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
               <svg className="place-card__bookmark-icon" width="18" height="19">
                 <use xlinkHref="#icon-bookmark"></use>
@@ -44,14 +44,14 @@ export function CreatePlaceCard({imageSource, isPremium, costPerNight, placeCard
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${Math.round(rating) * 20}%`}}></span>
+            <span style={{width: `${Math.round(offer.rating) * 20}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{placeCardName}</a>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{placeCardType}</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );

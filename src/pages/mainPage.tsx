@@ -1,10 +1,15 @@
-import { CreatePlaceCard } from '../components/placeCard';
+
+import { useState } from 'react';
+import { CreateOffers } from '../components/main_page_components/offers';
+import { Offer } from '../props/offer';
 
 type MainPageProps = {
-  placeCardsCount: number;
+  offers: Offer[];
 }
 
-export function CreateMainPage({placeCardsCount} : MainPageProps): JSX.Element {
+export function CreateMainPage({offers} : MainPageProps): JSX.Element {
+  const [, setCurrentPointedOffer] = useState<string | null>(null);
+
   return(
     <div className="page page--gray page--main">
       <header className="header">
@@ -78,7 +83,7 @@ export function CreateMainPage({placeCardsCount} : MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placeCardsCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -94,53 +99,7 @@ export function CreateMainPage({placeCardsCount} : MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <CreatePlaceCard
-                  imageSource="img/apartment-01.jpg"
-                  isPremium
-                  costPerNight={120}
-                  placeCardName="Beautiful &amp; luxurious apartment at great location"
-                  placeCardType="Apartment"
-                  isBookmarked={false}
-                  rating={4.0}
-                />
-                <CreatePlaceCard
-                  imageSource="img/room.jpg"
-                  isPremium={false}
-                  costPerNight={80}
-                  placeCardName="Wood and stone place"
-                  placeCardType="Room"
-                  isBookmarked
-                  rating={4.0}
-                />
-                <CreatePlaceCard
-                  imageSource="img/apartment-02.jpg"
-                  isPremium={false}
-                  costPerNight={123}
-                  placeCardName="Canal View Prinsengracht"
-                  placeCardType="Apartment"
-                  isBookmarked={false}
-                  rating={4.0}
-                />
-                <CreatePlaceCard
-                  imageSource="img/apartment-03.jpg"
-                  isPremium
-                  costPerNight={180}
-                  placeCardName="Nice, cozy, warm big bed apartment"
-                  placeCardType="Apartment"
-                  isBookmarked={false}
-                  rating={5.0}
-                />
-                <CreatePlaceCard
-                  imageSource="img/room.jpg"
-                  isPremium={false}
-                  costPerNight={80}
-                  placeCardName="Wood and stone place"
-                  placeCardType="Room"
-                  isBookmarked
-                  rating={4.0}
-                />
-              </div>
+              <CreateOffers offers={offers} setCurrentPointedOffer={setCurrentPointedOffer} favoritesOnly={false}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
