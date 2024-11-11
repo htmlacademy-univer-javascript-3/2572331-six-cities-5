@@ -1,14 +1,22 @@
-
 import { useState } from 'react';
 import { CreateOffers } from '../components/main_page_components/offers';
-import { Offer } from '../props/offer';
+import { Offer, Offers } from '../types/offer';
+import { Cities } from '../types/city';
+import Map from '../components/map/map';
 
 type MainPageProps = {
-  offers: Offer[];
+  offers: Offers;
+  cities: Cities;
 }
 
-export function CreateMainPage({offers} : MainPageProps): JSX.Element {
-  const [, setCurrentPointedOffer] = useState<string | null>(null);
+export function CreateMainPage({offers, cities} : MainPageProps): JSX.Element {
+  const [currentPointedOffer, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
+
+  const handleListItemHover = (offerId: string) => {
+    const currentOffer = offers.find((offer) => offer.id === offerId);
+
+    setCurrentPointedOffer(currentOffer);
+  };
 
   return(
     <div className="page page--gray page--main">
@@ -99,10 +107,10 @@ export function CreateMainPage({offers} : MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CreateOffers offers={offers} setCurrentPointedOffer={setCurrentPointedOffer} favoritesOnly={false}/>
+              <CreateOffers offers={offers} handleListItemHover={handleListItemHover} favoritesOnly={false}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map city={cities[0]} offers={offers} selectedOffer={currentPointedOffer}/>
             </div>
           </div>
         </div>

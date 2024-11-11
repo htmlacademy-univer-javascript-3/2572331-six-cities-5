@@ -1,6 +1,6 @@
-import { Review } from '../props/review';
+import { Reviews } from '../types/review';
 
-export const reviews: Review[] = [
+export const REVIEWS: Reviews = [
   {
     id: '00e23b69-e0a3-4151-a1b0-bbf2f72785d5',
     author: {

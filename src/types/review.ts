@@ -7,3 +7,5 @@ export type Review = {
   textReview: string;
   date: Date;
 }
+
+export type Reviews = Review[];

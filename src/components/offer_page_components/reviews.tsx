@@ -1,8 +1,8 @@
-import { Review } from '../../props/review';
+import { Reviews } from '../../types/review';
 import { CreateReview } from './review';
 
 type ReviewsProps = {
-  reviews: Review[];
+  reviews: Reviews;
 }
 
 export function CreateReviews({reviews} : ReviewsProps) {

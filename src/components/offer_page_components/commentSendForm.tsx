@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { CommentSendFormState } from '../../props/commentSendFormState';
+import { CommentSendFormState } from '../../types/commentSendFormState';
 
 type CommentSendFormProps = {
   сommentFormData: CommentSendFormState;
