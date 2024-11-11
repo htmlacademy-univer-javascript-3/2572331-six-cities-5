@@ -6,7 +6,7 @@ type CommentSendFormProps = {
   setCommentFormData: Dispatch<SetStateAction<CommentSendFormState>>;
 }
 
-export function CreateCommentSendForm({сommentFormData, setCommentFormData} : CommentSendFormProps) {
+export function CreateCommentSendForm({сommentFormData, setCommentFormData} : CommentSendFormProps) : JSX.Element {
   const handleFieldChange = (evt: { target: { name: string; value: number | string } }) => {
     const {name, value} = evt.target;
     setCommentFormData({...сommentFormData, [name]: value});

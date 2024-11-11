@@ -1,20 +1,21 @@
 import { Offers } from '../../types/offer';
 import { CreateOffer } from './offer';
+import { OfferCardType } from './offerCardType';
 
 type OffersProps = {
   offers: Offers;
   handleListItemHover: (itemId: string) => void;
-  favoritesOnly: boolean;
+  offerCardType: OfferCardType;
 }
 
-export function CreateOffers({offers, handleListItemHover, favoritesOnly} : OffersProps): JSX.Element {
-  const offersToRender = !favoritesOnly ? offers : offers.filter((offer) => offer.isFavorite);
+export function CreateOffers({offers, handleListItemHover, offerCardType} : OffersProps) : JSX.Element {
+  const offersToRender = !offerCardType.favoritesOnly ? offers : offers.filter((offer) => offer.isFavorite);
 
   return(
-    <div className={!favoritesOnly ? 'cities__places-list places__list tabs__content' : 'favorites__places'}>
+    <div className={offerCardType.placeCardsClassName}>
       {offersToRender.map((offer) =>
         (
-          <CreateOffer offer={offer} handleListItemHover={handleListItemHover} favoritesOnly={favoritesOnly} key={offer.id}/>
+          <CreateOffer offer={offer} handleListItemHover={handleListItemHover} offerCardType={offerCardType} key={offer.id}/>
         )
       )}
     </div>

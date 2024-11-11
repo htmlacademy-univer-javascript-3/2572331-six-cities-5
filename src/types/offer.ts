@@ -1,4 +1,5 @@
 import { Coordinates } from './coordinates';
+import { OfferInfo } from './offerInfo';
 
 export type Offer = {
   id: string;
@@ -9,8 +10,9 @@ export type Offer = {
   type: string;
   isFavorite: boolean;
   rating: number;
-  city: string;
+  cityName: string;
   location: Coordinates;
+  info: OfferInfo;
 };
 
 export type Offers = Offer[];

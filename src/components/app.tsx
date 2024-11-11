@@ -22,7 +22,7 @@ export function CreateApp({offers, reviews, cities} : AppProps): JSX.Element {
         <Route path='/' element={<CreateMainPage offers={offers} cities={cities} />} />
         <Route path='/login' element={<CreateLoginPage />} />
         <Route path='/favorites' element={<CreatePrivateRoute page={<CreateFavoritesPage offers={offers} />} />} />
-        <Route path='/offer/:id' element={<CreateOfferPage reviews={reviews} />} />
+        <Route path='/offer/:id' element={<CreateOfferPage offers={offers} cities={cities} reviews={reviews} />} />
         <Route path='*' element={<CreateNotFoundPage />} />
       </Routes>
     </BrowserRouter>

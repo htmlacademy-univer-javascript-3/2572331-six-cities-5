@@ -4,7 +4,7 @@ type ReviewProps = {
   review: Review;
 }
 
-export function CreateReview({review} : ReviewProps) {
+export function CreateReview({review} : ReviewProps) : JSX.Element {
   return(
     <li className="reviews__item">
       <div className="reviews__user user">

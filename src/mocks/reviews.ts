@@ -3,6 +3,7 @@ import { Reviews } from '../types/review';
 export const REVIEWS: Reviews = [
   {
     id: '00e23b69-e0a3-4151-a1b0-bbf2f72785d5',
+    offerId: '4154ec97-ab51-4926-8493-0763e06d6358',
     author: {
       id: 'adfe717d-7d60-4e70-b609-e9ed0be5eaf3',
       email: 'test@test.com',

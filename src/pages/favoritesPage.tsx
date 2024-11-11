@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CreateOffers } from '../components/main_page_components/offers';
 import { Offer } from '../types/offer';
+import { OfferCardType } from '../components/main_page_components/offerCardType';
 
 type FavoritesPageProps = {
   offers: Offer[];
@@ -15,7 +16,7 @@ export function CreateFavoritesPage({offers} : FavoritesPageProps): JSX.Element 
     setCurrentPointedOffer(currentOffer);
   };
 
-  const cities = [...new Set(offers.map(({ city }) => city))];
+  const cities = [...new Set(offers.map(({ cityName: city }) => city))];
 
   return(
     <div className="page">
@@ -62,7 +63,7 @@ export function CreateFavoritesPage({offers} : FavoritesPageProps): JSX.Element 
                       </a>
                     </div>
                   </div>
-                  <CreateOffers offers={offers.filter((offer) => offer.city === city)} handleListItemHover={handleListItemHover} favoritesOnly/>
+                  <CreateOffers offers={offers.filter((offer) => offer.cityName === city)} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.FAVORITES_PAGE}/>
                 </li>)))}
             </ul>
           </section>
