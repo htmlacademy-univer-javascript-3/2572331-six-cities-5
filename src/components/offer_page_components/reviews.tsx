@@ -5,7 +5,7 @@ type ReviewsProps = {
   reviews: Reviews;
 }
 
-export function CreateReviews({reviews} : ReviewsProps) {
+export function CreateReviews({reviews} : ReviewsProps) : JSX.Element {
   return(
     <ul className="reviews__list">
       {reviews.map((review) =>

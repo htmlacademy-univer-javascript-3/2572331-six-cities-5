@@ -3,6 +3,7 @@ import { CreateOffers } from '../components/main_page_components/offers';
 import { Offer, Offers } from '../types/offer';
 import { Cities } from '../types/city';
 import Map from '../components/map/map';
+import { OfferCardType } from '../components/main_page_components/offerCardType';
 
 type MainPageProps = {
   offers: Offers;
@@ -107,10 +108,10 @@ export function CreateMainPage({offers, cities} : MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CreateOffers offers={offers} handleListItemHover={handleListItemHover} favoritesOnly={false}/>
+              <CreateOffers offers={offers} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.MAIN_PAGE}/>
             </section>
             <div className="cities__right-section">
-              <Map city={cities[0]} offers={offers} selectedOffer={currentPointedOffer}/>
+              <Map className='cities__map map' city={cities[0]} offers={offers} selectedOffer={currentPointedOffer}/>
             </div>
           </div>
         </div>
