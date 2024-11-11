@@ -12,3 +12,5 @@ export type Offer = {
   city: string;
   location: Coordinates;
 };
+
+export type Offers = Offer[];

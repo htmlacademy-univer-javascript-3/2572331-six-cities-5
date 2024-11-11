@@ -5,19 +5,21 @@ import { CreateLoginPage } from '../pages/loginPage';
 import { CreateFavoritesPage } from '../pages/favoritesPage';
 import { CreateOfferPage } from '../pages/offerPage';
 import { CreatePrivateRoute } from './privateRoute';
-import { Offer } from '../props/offer';
-import { Review } from '../props/review';
+import { Offers } from '../types/offer';
+import { Reviews } from '../types/review';
+import { Cities } from '../types/city';
 
 type AppProps = {
-  offers: Offer[];
-  reviews: Review[];
+  offers: Offers;
+  reviews: Reviews;
+  cities: Cities;
 };
 
-export function CreateApp({offers, reviews} : AppProps): JSX.Element {
+export function CreateApp({offers, reviews, cities} : AppProps): JSX.Element {
   return(
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<CreateMainPage offers={offers} />} />
+        <Route path='/' element={<CreateMainPage offers={offers} cities={cities} />} />
         <Route path='/login' element={<CreateLoginPage />} />
         <Route path='/favorites' element={<CreatePrivateRoute page={<CreateFavoritesPage offers={offers} />} />} />
         <Route path='/offer/:id' element={<CreateOfferPage reviews={reviews} />} />

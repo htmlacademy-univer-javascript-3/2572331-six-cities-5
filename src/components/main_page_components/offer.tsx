@@ -1,16 +1,15 @@
-import { Dispatch, SetStateAction } from 'react';
-import { Offer } from '../../props/offer';
+import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 
 type OfferProps = {
   offer: Offer;
-  setCurrentPointedOffer: Dispatch<SetStateAction<string | null>>;
+  handleListItemHover: (itemId: string) => void;
   favoritesOnly: boolean;
 }
 
-export function CreateOffer({offer, setCurrentPointedOffer, favoritesOnly} : OfferProps) {
+export function CreateOffer({offer, handleListItemHover, favoritesOnly} : OfferProps) {
   return(
-    <article className={`${!favoritesOnly ? 'cities' : 'favorites'}__card place-card`} onMouseOver={() => setCurrentPointedOffer(offer.id)}>
+    <article className={`${!favoritesOnly ? 'cities' : 'favorites'}__card place-card`} onMouseOver={() => handleListItemHover(offer.id)}>
       {offer.isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>

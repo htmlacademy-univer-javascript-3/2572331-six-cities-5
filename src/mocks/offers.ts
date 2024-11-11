@@ -1,6 +1,6 @@
-import { Offer } from '../props/offer';
+import { Offers } from '../types/offer';
 
-export const offers: Offer[] = [
+export const OFFERS: Offers = [
   {
     id: '4154ec97-ab51-4926-8493-0763e06d6358',
     previewImageSource: 'img/apartment-01.jpg',
@@ -12,8 +12,8 @@ export const offers: Offer[] = [
     rating: 4.0,
     city: 'Amsterdam',
     location: {
-      latitude: 0,
-      longitude: 0
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198
     }
   },
   {
@@ -27,8 +27,8 @@ export const offers: Offer[] = [
     rating: 4.0,
     city: 'Amsterdam',
     location: {
-      latitude: 0,
-      longitude: 0
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198
     }
   },
   {
@@ -42,12 +42,12 @@ export const offers: Offer[] = [
     rating: 4.0,
     city: 'Amsterdam',
     location: {
-      latitude: 0,
-      longitude: 0
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198
     }
   },
   {
-    id: '915d7c58-abe5-4181-8e4c-b33a3a009f31',
+    id: '66d2fa14-c498-4537-9b2b-8ecc65cef714',
     previewImageSource: 'img/apartment-03.jpg',
     isPremium: true,
     costPerNight: 180,
@@ -57,8 +57,8 @@ export const offers: Offer[] = [
     rating: 5.0,
     city: 'Amsterdam',
     location: {
-      latitude: 0,
-      longitude: 0
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198
     }
   }
 ];

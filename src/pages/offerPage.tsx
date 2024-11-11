@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { CreateCommentSendForm } from '../components/offer_page_components/commentSendForm';
 import { CreateReviews } from '../components/offer_page_components/reviews';
-import { CommentSendFormState } from '../props/commentSendFormState';
-import { Review } from '../props/review';
+import { CommentSendFormState } from '../types/commentSendFormState';
+import { Reviews } from '../types/review';
 
 type OfferPageProps = {
-  reviews: Review[];
+  reviews: Reviews;
 }
 
 export function CreateOfferPage({reviews} : OfferPageProps): JSX.Element {
