@@ -1,6 +1,7 @@
 {
   "name": "six-cities",
   "version": "14.0.0",
+  "homepage": "https://d3rpole96.github.io/2572331-six-cities-5",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
