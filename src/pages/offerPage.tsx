@@ -17,7 +17,7 @@ type OfferPageProps = {
   reviews: Reviews;
 }
 
-export function CreateOfferPage({offers, cities, reviews} : OfferPageProps): JSX.Element {
+export function OfferPage({offers, cities, reviews} : OfferPageProps): JSX.Element {
   const { id } = useParams();
   const offer = offers.find((offerElement) => offerElement.id === id);
   const city = cities.find((cityElement) => cityElement.title === offer?.cityName);

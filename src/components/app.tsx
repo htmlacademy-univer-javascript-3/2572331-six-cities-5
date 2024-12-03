@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { CreateMainPage } from '../pages/mainPage';
-import { CreateNotFoundPage } from '../pages/notFoundPage';
-import { CreateLoginPage } from '../pages/loginPage';
-import { CreateFavoritesPage } from '../pages/favoritesPage';
-import { CreateOfferPage } from '../pages/offerPage';
-import { CreatePrivateRoute } from './privateRoute';
+import { MainPage } from '../pages/mainPage';
+import { NotFoundPage } from '../pages/notFoundPage';
+import { LoginPage } from '../pages/loginPage';
+import { FavoritesPage } from '../pages/favoritesPage';
+import { OfferPage } from '../pages/offerPage';
+import { PrivateRoute } from './privateRoute';
 import { Offers } from '../types/offer';
 import { Reviews } from '../types/review';
 import { Cities } from '../types/city';
@@ -15,15 +15,15 @@ type AppProps = {
   cities: Cities;
 };
 
-export function CreateApp({offers, reviews, cities} : AppProps): JSX.Element {
+export function App({offers, reviews, cities} : AppProps): JSX.Element {
   return(
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<CreateMainPage offers={offers} cities={cities} />} />
-        <Route path='/login' element={<CreateLoginPage />} />
-        <Route path='/favorites' element={<CreatePrivateRoute page={<CreateFavoritesPage offers={offers} />} />} />
-        <Route path='/offer/:id' element={<CreateOfferPage offers={offers} cities={cities} reviews={reviews} />} />
-        <Route path='*' element={<CreateNotFoundPage />} />
+        <Route path='/' element={<MainPage offers={offers} cities={cities} />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/favorites' element={<PrivateRoute page={<FavoritesPage offers={offers} />} />} />
+        <Route path='/offer/:id' element={<OfferPage offers={offers} cities={cities} reviews={reviews} />} />
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

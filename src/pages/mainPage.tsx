@@ -10,7 +10,7 @@ type MainPageProps = {
   cities: Cities;
 }
 
-export function CreateMainPage({offers, cities} : MainPageProps): JSX.Element {
+export function MainPage({offers, cities} : MainPageProps): JSX.Element {
   const [currentPointedOffer, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
 
   const handleListItemHover = (offerId: string) => {

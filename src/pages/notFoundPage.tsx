@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export function CreateNotFoundPage(): JSX.Element {
+export function NotFoundPage(): JSX.Element {
   return(
     <div style={{marginTop: '20%', textAlign: 'center'}}>
       <h1>

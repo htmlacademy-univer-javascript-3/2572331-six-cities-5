@@ -7,7 +7,7 @@ type FavoritesPageProps = {
   offers: Offer[];
 }
 
-export function CreateFavoritesPage({offers} : FavoritesPageProps): JSX.Element {
+export function FavoritesPage({offers} : FavoritesPageProps): JSX.Element {
   const [, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
 
   const handleListItemHover = (offerId: string) => {
