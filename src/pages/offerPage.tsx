@@ -2,31 +2,31 @@ import { useState } from 'react';
 import { CreateCommentSendForm } from '../components/offer_page_components/commentSendForm';
 import { CreateReviews } from '../components/offer_page_components/reviews';
 import { CommentSendFormState } from '../types/commentSendFormState';
-import { Reviews } from '../types/review';
-import { Offer, Offers } from '../types/offer';
+import { Offer } from '../types/offer';
 import { useParams } from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
 import Map from '../components/map/map';
-import { Cities } from '../types/city';
-import { CreateOffers } from '../components/main_page_components/offers';
-import { OfferCardType } from '../components/main_page_components/offerCardType';
+import { OfferCards } from '../components/offerCards/offerCards';
+import { OfferCardType } from '../components/offerCards/offerCardType';
+import { getCityByName } from '../extensions/cityExtensions';
+import { useAppSelector } from '../hooks';
+import { CITIES } from '../mocks/cities';
 
-type OfferPageProps = {
-  offers: Offers;
-  cities: Cities;
-  reviews: Reviews;
-}
-
-export function CreateOfferPage({offers, cities, reviews} : OfferPageProps): JSX.Element {
+export function OfferPage(): JSX.Element {
   const { id } = useParams();
+
+  const offers = useAppSelector((state) => state.offers);
+  const reviews = useAppSelector((state) => state.reviews);
+
   const offer = offers.find((offerElement) => offerElement.id === id);
-  const city = cities.find((cityElement) => cityElement.title === offer?.cityName);
-  if (offer === undefined || city === undefined) {
+
+  if (offer === undefined) {
     throw new TypeError('The value was promised to always be there!');
   }
 
   const offerReviews = reviews.filter((review) => review.offerId === id);
-  const offersNearby = offers.filter((offerElement) => offerElement.id !== id);
+  const offersNearby = offers.filter((offerElement) => offerElement.cityName === offer.cityName && offerElement.id !== id).slice(0, 3);
+  const city = getCityByName(CITIES, offer.cityName);
 
   const [сommentFormData, setCommentFormData] = useState<CommentSendFormState>({
     rating: 0,
@@ -180,7 +180,7 @@ export function CreateOfferPage({offers, cities, reviews} : OfferPageProps): JSX
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CreateOffers offers={offersNearby} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.OFFER_PAGE}/>
+            <OfferCards offers={offersNearby} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.OFFER_PAGE}/>
           </section>
         </div>
       </main>

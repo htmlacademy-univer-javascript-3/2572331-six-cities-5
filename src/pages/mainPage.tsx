@@ -1,17 +1,31 @@
 import { useState } from 'react';
-import { CreateOffers } from '../components/main_page_components/offers';
-import { Offer, Offers } from '../types/offer';
-import { Cities } from '../types/city';
+import { OfferCards } from '../components/offerCards/offerCards';
+import { Offer } from '../types/offer';
+import { City } from '../types/city';
 import Map from '../components/map/map';
-import { OfferCardType } from '../components/main_page_components/offerCardType';
+import { OfferCardType } from '../components/offerCards/offerCardType';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { changeCity } from '../store/action';
+import { CitiesPanel } from '../components/main_page_components/cities';
+import { CITIES } from '../consts/cities';
+import { getOffersByCityName } from '../extensions/offerExtensions';
 
-type MainPageProps = {
-  offers: Offers;
-  cities: Cities;
-}
+export function MainPage(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-export function CreateMainPage({offers, cities} : MainPageProps): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  let city = useAppSelector((state) => state.city);
+
+  let filteredOffers = getOffersByCityName(offers, city.title);
+
   const [currentPointedOffer, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
+
+  const handleCityChange = (newCity: City) => {
+    setCurrentPointedOffer(undefined);
+    dispatch(changeCity(newCity));
+    city = newCity;
+    filteredOffers = getOffersByCityName(offers, newCity.title);
+  };
 
   const handleListItemHover = (offerId: string) => {
     const currentOffer = offers.find((offer) => offer.id === offerId);
@@ -52,47 +66,12 @@ export function CreateMainPage({offers, cities} : MainPageProps): JSX.Element {
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <CitiesPanel cities={CITIES} handleCityChange={handleCityChange} />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{filteredOffers.length} places to stay in {city.title}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -108,10 +87,10 @@ export function CreateMainPage({offers, cities} : MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CreateOffers offers={offers} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.MAIN_PAGE}/>
+              <OfferCards offers={filteredOffers} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.MAIN_PAGE}/>
             </section>
             <div className="cities__right-section">
-              <Map className='cities__map map' city={cities[0]} offers={offers} selectedOffer={currentPointedOffer}/>
+              <Map className='cities__map map' city={city} offers={filteredOffers} selectedOffer={currentPointedOffer}/>
             </div>
           </div>
         </div>

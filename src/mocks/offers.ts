@@ -120,5 +120,35 @@ export const OFFERS: Offers = [
       offerText: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
       An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.`
     }
+  },
+  {
+    id: 'bc234e88-393c-4576-83ec-3e026be5f086',
+    previewImageSource: 'img/apartment-03.jpg',
+    isPremium: true,
+    costPerNight: 180,
+    title: 'Nice, cozy, warm big bed apartment',
+    type: 'Apartment',
+    isFavorite: false,
+    rating: 5.0,
+    cityName: 'Paris',
+    location: {
+      latitude: 48.856613,
+      longitude: 2.352222
+    },
+    info: {
+      imagesSources: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-01.jpg'],
+      bedroomsCount: 6,
+      maxAdultsCount: 12,
+      insideItems: ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'],
+      host: {
+        id: 'd91626c2-7b19-4ecb-b652-5cdfd9ac3700',
+        email: 'test2@test.com',
+        name: 'Angelina',
+        status: 'Pro',
+        avatarSource: 'img/avatar-angelina.jpg'
+      },
+      offerText: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+      An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.`
+    }
   }
 ];

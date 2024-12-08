@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { CreateOffers } from '../components/main_page_components/offers';
+import { OfferCards } from '../components/offerCards/offerCards';
 import { Offer } from '../types/offer';
-import { OfferCardType } from '../components/main_page_components/offerCardType';
+import { OfferCardType } from '../components/offerCards/offerCardType';
+import { useAppSelector } from '../hooks';
 
-type FavoritesPageProps = {
-  offers: Offer[];
-}
+export function FavoritesPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers).filter((offer) => offer.isFavorite);
 
-export function CreateFavoritesPage({offers} : FavoritesPageProps): JSX.Element {
   const [, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
 
   const handleListItemHover = (offerId: string) => {
@@ -63,7 +62,7 @@ export function CreateFavoritesPage({offers} : FavoritesPageProps): JSX.Element 
                       </a>
                     </div>
                   </div>
-                  <CreateOffers offers={offers.filter((offer) => offer.cityName === city)} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.FAVORITES_PAGE}/>
+                  <OfferCards offers={offers.filter((offer) => offer.cityName === city)} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.FAVORITES_PAGE}/>
                 </li>)))}
             </ul>
           </section>

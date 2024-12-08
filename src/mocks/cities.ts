@@ -8,5 +8,13 @@ export const CITIES: Cities = [
       longitude: 4.88969
     },
     zoom: 10
-  }
+  },
+  {
+    title: 'Paris',
+    coordinates: {
+      latitude: 48.8575,
+      longitude: 2.3514
+    },
+    zoom: 10
+  },
 ];
