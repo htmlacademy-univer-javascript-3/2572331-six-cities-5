@@ -15,9 +15,9 @@ export function CitiesPanel({cities, handleCityChange} : CitiesProps) : JSX.Elem
         <ul className="locations__list tabs__list">
           {cities.map((city) =>
             (
-              <li className="locations__item" key={city.title} onClick={() => handleCityChange(city)}>
-                <a className={`locations__item-link tabs__item${currentCity.title === city.title ? ' tabs__item--active' : ''}`} href="#">
-                  <span>{city.title}</span>
+              <li className="locations__item" key={city.name} onClick={() => handleCityChange(city)}>
+                <a className={`locations__item-link tabs__item${currentCity.name === city.name ? ' tabs__item--active' : ''}`} href="#">
+                  <span>{city.name}</span>
                 </a>
               </li>
             )

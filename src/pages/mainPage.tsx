@@ -18,7 +18,7 @@ export function MainPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   let city = useAppSelector((state) => state.city);
 
-  let filteredOffers = getOffersByCityName(offers, city.title);
+  let filteredOffers = getOffersByCityName(offers, city.name);
 
   const [currentPointedOffer, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
   const [sortingIndex, setSorting] = useState<number>(0);
@@ -27,7 +27,7 @@ export function MainPage(): JSX.Element {
     setCurrentPointedOffer(undefined);
     dispatch(changeCity(newCity));
     city = newCity;
-    filteredOffers = getOffersByCityName(offers, newCity.title);
+    filteredOffers = getOffersByCityName(offers, newCity.name);
   };
 
   const handleListItemHover = (offerId: string) => {
@@ -76,7 +76,7 @@ export function MainPage(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{sortedFilteredOffers.length} places to stay in {city.title}</b>
+              <b className="places__found">{sortedFilteredOffers.length} places to stay in {city.name}</b>
               <Sorting sortingIndex={sortingIndex} setSorting={setSorting} />
               <OfferCards offers={sortedFilteredOffers} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.MAIN_PAGE}/>
             </section>

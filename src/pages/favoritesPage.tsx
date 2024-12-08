@@ -15,7 +15,7 @@ export function FavoritesPage(): JSX.Element {
     setCurrentPointedOffer(currentOffer);
   };
 
-  const cities = [...new Set(offers.map(({ cityName: city }) => city))];
+  const cities = [...new Set(offers.map(({ city: city }) => city.name))];
 
   return(
     <div className="page">
@@ -62,7 +62,7 @@ export function FavoritesPage(): JSX.Element {
                       </a>
                     </div>
                   </div>
-                  <OfferCards offers={offers.filter((offer) => offer.cityName === city)} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.FAVORITES_PAGE}/>
+                  <OfferCards offers={offers.filter((offer) => offer.city.name === city)} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.FAVORITES_PAGE}/>
                 </li>)))}
             </ul>
           </section>

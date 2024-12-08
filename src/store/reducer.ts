@@ -1,26 +1,42 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { OFFERS } from '../mocks/offers';
-import { CITIES } from '../mocks/cities';
-import { changeCity, setOffers, setReviews } from './action';
+import { changeCity, requireAuthorization, setError, setOffers, setOffersDataLoadingStatus } from './action';
 import { getCityByName } from '../extensions/cityExtensions';
-import { ReducerState } from '../types/reducerState';
-import { REVIEWS } from '../mocks/reviews';
+import { CITIES } from '../consts/cities';
+import { AuthorizationStatus } from '../consts/const';
+import { City } from '../types/city';
+import { Offers } from '../types/offer';
 
-const initialState: ReducerState = {
+type InitialState = {
+  city: City;
+  offers: Offers;
+  authorizationStatus: AuthorizationStatus;
+  isOffersDataLoading: boolean;
+  error: string | null;
+};
+
+const initialState: InitialState = {
   city: getCityByName(CITIES, 'Paris'),
-  offers: OFFERS,
-  reviews: REVIEWS
+  offers: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isOffersDataLoading: false,
+  error: null
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeCity, (state, { payload }) => {
-      state.city = payload;
+    .addCase(changeCity, (state, action) => {
+      state.city = action.payload;
     })
-    .addCase(setOffers, (state) => {
-      state.offers = OFFERS;
+    .addCase(setOffers, (state, action) => {
+      state.offers = action.payload;
     })
-    .addCase(setReviews, (state) => {
-      state.reviews = REVIEWS;
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
