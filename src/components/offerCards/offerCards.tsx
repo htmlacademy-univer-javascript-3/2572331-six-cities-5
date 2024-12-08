@@ -1,5 +1,5 @@
 import { Offers } from '../../types/offer';
-import { CreateOffer } from './offer';
+import { OfferCard } from './offerCard';
 import { OfferCardType } from './offerCardType';
 
 type OffersProps = {
@@ -8,14 +8,14 @@ type OffersProps = {
   offerCardType: OfferCardType;
 }
 
-export function CreateOffers({offers, handleListItemHover, offerCardType} : OffersProps) : JSX.Element {
+export function OfferCards({offers, handleListItemHover, offerCardType} : OffersProps) : JSX.Element {
   const offersToRender = !offerCardType.favoritesOnly ? offers : offers.filter((offer) => offer.isFavorite);
 
   return(
     <div className={offerCardType.placeCardsClassName}>
       {offersToRender.map((offer) =>
         (
-          <CreateOffer offer={offer} handleListItemHover={handleListItemHover} offerCardType={offerCardType} key={offer.id}/>
+          <OfferCard offer={offer} handleListItemHover={handleListItemHover} offerCardType={offerCardType} key={offer.id}/>
         )
       )}
     </div>

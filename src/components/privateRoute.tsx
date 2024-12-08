@@ -7,7 +7,7 @@ type PrivateRouteProps = {
 
 export function PrivateRoute({page} : PrivateRouteProps) : JSX.Element {
   return (
-    GetJwt() !== null
+    GetJwt() === null
       ? page
       : <Navigate to='/login' />
   );

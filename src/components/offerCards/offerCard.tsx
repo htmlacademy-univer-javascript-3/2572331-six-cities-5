@@ -8,7 +8,7 @@ type OfferProps = {
   offerCardType: OfferCardType;
 }
 
-export function CreateOffer({offer, handleListItemHover, offerCardType} : OfferProps) : JSX.Element {
+export function OfferCard({offer, handleListItemHover, offerCardType} : OfferProps) : JSX.Element {
   return(
     <article className={`${offerCardType.className}__card place-card`} onMouseOver={() => handleListItemHover(offer.id)}>
       {offer.isPremium ?
