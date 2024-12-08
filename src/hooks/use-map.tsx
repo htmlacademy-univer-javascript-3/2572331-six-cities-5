@@ -13,10 +13,10 @@ export function useMap(
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.coordinates.latitude,
-          lng: city.coordinates.longitude
+          lat: city.location.latitude,
+          lng: city.location.longitude
         },
-        zoom: city.zoom
+        zoom: city.location.zoom
       });
 
       const layer = new TileLayer(
@@ -34,8 +34,8 @@ export function useMap(
     }
 
     if (map !== null && isRenderedRef.current) {
-      map.panTo(new L.LatLng(city.coordinates.latitude, city.coordinates.longitude));
-      map.setZoom(city.zoom);
+      map.panTo(new L.LatLng(city.location.latitude, city.location.longitude));
+      map.setZoom(city.location.zoom);
     }
   }, [mapRef, city, map]);
 

@@ -18,13 +18,13 @@ export function OfferCard({offer, handleListItemHover, offerCardType} : OfferPro
         : null}
       <div className={`${offerCardType.className}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src={offer.previewImageSource} width={offerCardType.imageSize.width} height={offerCardType.imageSize.height} alt="Place image"/>
+          <img className="place-card__image" src={offer.previewImage} width={offerCardType.imageSize.width} height={offerCardType.imageSize.height} alt="Place image"/>
         </a>
       </div>
       <div className={offerCardType.PlaceCardInfoClassName}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.costPerNight}</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           {offer.isFavorite ?

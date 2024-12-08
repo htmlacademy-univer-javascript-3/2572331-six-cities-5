@@ -10,13 +10,14 @@ import { OfferCards } from '../components/offerCards/offerCards';
 import { OfferCardType } from '../components/offerCards/offerCardType';
 import { getCityByName } from '../extensions/cityExtensions';
 import { useAppSelector } from '../hooks';
-import { CITIES } from '../mocks/cities';
+import { CITIES } from '../consts/cities';
+import { Reviews } from '../types/review';
 
 export function OfferPage(): JSX.Element {
   const { id } = useParams();
 
   const offers = useAppSelector((state) => state.offers);
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews: Reviews = []; // заглушка, будет исправлена в дз 7.3
 
   const offer = offers.find((offerElement) => offerElement.id === id);
 
@@ -25,8 +26,8 @@ export function OfferPage(): JSX.Element {
   }
 
   const offerReviews = reviews.filter((review) => review.offerId === id);
-  const offersNearby = offers.filter((offerElement) => offerElement.cityName === offer.cityName && offerElement.id !== id).slice(0, 3);
-  const city = getCityByName(CITIES, offer.cityName);
+  const offersNearby = offers.filter((offerElement) => offerElement.city.name === offer.city.name && offerElement.id !== id).slice(0, 3);
+  const city = getCityByName(CITIES, offer.city.name);
 
   const [сommentFormData, setCommentFormData] = useState<CommentSendFormState>({
     rating: 0,
@@ -76,10 +77,10 @@ export function OfferPage(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {offer?.info.imagesSources.map((imageSource) =>
+              {offer?.images.map((image) =>
                 (
-                  <div className="offer__image-wrapper" key={imageSource}>
-                    <img className="offer__image" src={imageSource} alt="Photo studio"/>
+                  <div className="offer__image-wrapper" key={image}>
+                    <img className="offer__image" src={image} alt="Photo studio"/>
                   </div>
                 )
               )}
@@ -123,23 +124,23 @@ export function OfferPage(): JSX.Element {
                   {offer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offer.info.bedroomsCount} Bedrooms
+                  {offer.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offer.info.maxAdultsCount} adults
+                  Max {offer.maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{offer.costPerNight}</b>
+                <b className="offer__price-value">&euro;{offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {offer.info.insideItems.map((insideItem) =>
+                  {offer.goods.map((goodsItem) =>
                     (
-                      <li className="offer__inside-item" key={insideItem}>
-                        {insideItem}
+                      <li className="offer__inside-item" key={goodsItem}>
+                        {goodsItem}
                       </li>
                     )
                   )}
@@ -149,17 +150,19 @@ export function OfferPage(): JSX.Element {
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src={offer.info.host.avatarSource} width="74" height="74" alt="Host avatar"/>
+                    <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="offer__user-name">
-                    {offer.info.host.name}
+                    {offer.host.name}
                   </span>
-                  <span className="offer__user-status">
-                    {offer.info.host.status}
-                  </span>
+                  {offer.host.isPro ?
+                    <span className="offer__user-status">
+                      {offer.host.isPro}
+                    </span>
+                    : null}
                 </div>
                 <div className="offer__description">
-                  {offer.info.offerText.split(/\r?\n/).map((offerText) =>
+                  {offer.description.split(/\r?\n/).map((offerText) =>
                     (
                       <p className="offer__text" key={uuidv4()}>
                         {offerText}

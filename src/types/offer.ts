@@ -1,18 +1,24 @@
-import { Coordinates } from './coordinates';
-import { OfferInfo } from './offerInfo';
+import { City } from './city';
+import { Location } from './location';
+import { User } from './user';
 
 export type Offer = {
   id: string;
-  previewImageSource: string;
-  isPremium: boolean;
-  costPerNight: number;
   title: string;
   type: string;
+  price: number;
+  previewImage: string;
+  city: City;
+  location: Location;
   isFavorite: boolean;
+  isPremium: boolean;
   rating: number;
-  cityName: string;
-  location: Coordinates;
-  info: OfferInfo;
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: User;
+  images: string[];
+  maxAdults: number;
 };
 
 export type Offers = Offer[];

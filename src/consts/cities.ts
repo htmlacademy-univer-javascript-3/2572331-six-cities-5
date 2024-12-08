@@ -2,51 +2,51 @@ import { Cities } from '../types/city';
 
 export const CITIES: Cities = [
   {
-    title: 'Paris',
-    coordinates: {
+    name: 'Paris',
+    location: {
       latitude: 48.856613,
-      longitude: 2.352222
+      longitude: 2.352222,
+      zoom: 10
     },
-    zoom: 10
   },
   {
-    title: 'Cologne',
-    coordinates: {
+    name: 'Cologne',
+    location: {
       latitude: 50.935173,
-      longitude: 6.953101
+      longitude: 6.953101,
+      zoom: 10
     },
-    zoom: 10
   },
   {
-    title: 'Brussels',
-    coordinates: {
+    name: 'Brussels',
+    location: {
       latitude: 50.850346,
-      longitude: 4.351721
+      longitude: 4.351721,
+      zoom: 11
     },
-    zoom: 11
   },
   {
-    title: 'Amsterdam',
-    coordinates: {
+    name: 'Amsterdam',
+    location: {
       latitude: 52.370216,
-      longitude: 4.895168
+      longitude: 4.895168,
+      zoom: 10
     },
-    zoom: 10
   },
   {
-    title: 'Hamburg',
-    coordinates: {
+    name: 'Hamburg',
+    location: {
       latitude: 53.551086,
-      longitude: 9.993682
+      longitude: 9.993682,
+      zoom: 10
     },
-    zoom: 10
   },
   {
-    title: 'Dusseldorf',
-    coordinates: {
+    name: 'Dusseldorf',
+    location: {
       latitude: 51.227741,
-      longitude: 6.773456
+      longitude: 6.773456,
+      zoom: 10
     },
-    zoom: 10
   }
 ];

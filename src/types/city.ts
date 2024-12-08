@@ -1,9 +1,8 @@
-import { Coordinates } from './coordinates';
+import { Location } from './location';
 
 export type City = {
-  title: string;
-  coordinates: Coordinates;
-  zoom: number;
+  name: string;
+  location: Location;
 };
 
 export type Cities = City[];
