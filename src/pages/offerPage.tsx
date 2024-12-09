@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CommentSendForm } from '../components/offer_page_components/comment-send-form';
 import { CreateReviews } from '../components/offer_page_components/reviews';
 import { CommentSendFormState } from '../types/comment-send-form-state';
@@ -8,70 +8,59 @@ import {v4 as uuidv4} from 'uuid';
 import Map from '../components/map/map';
 import { OfferCards } from '../components/offerCards/offerCards';
 import { OfferCardType } from '../components/offerCards/offerCardType';
-import { getCityByName } from '../extensions/cityExtensions';
-import { useAppSelector } from '../hooks';
-import { CITIES } from '../consts/cities';
-import { Reviews } from '../types/review';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { Header } from '../components/header/header';
+import { getCommentsAction, getOfferAction } from '../store/api-actions';
+import { LoadingScreen } from './loading-screen';
+import { NotFoundPage } from './notFoundPage';
+import { getToken } from '../services/auth-storage';
 
 export function OfferPage(): JSX.Element {
   const { id } = useParams();
 
-  const offers = useAppSelector((state) => state.offers);
-  const reviews: Reviews = []; // заглушка, будет исправлена в дз 7.3
+  const dispatch = useAppDispatch();
 
-  const offer = offers.find((offerElement) => offerElement.id === id);
-
-  if (offer === undefined) {
-    throw new TypeError('The value was promised to always be there!');
-  }
-
-  const offerReviews = reviews.filter((review) => review.offerId === id);
-  const offersNearby = offers.filter((offerElement) => offerElement.city.name === offer.city.name && offerElement.id !== id).slice(0, 3);
-  const city = getCityByName(CITIES, offer.city.name);
-
-  const [сommentFormData, setCommentFormData] = useState<CommentSendFormState>({
-    rating: 0,
-    review: ''
-  });
+  const offerFullInfo = useAppSelector((state) => state.currentOffer);
+  const offer = offerFullInfo?.offer;
+  const offersNearby = offerFullInfo?.offersNearby.slice(0, 3);
+  const comments = offerFullInfo?.comments;
+  const city = offer?.city;
 
   const [currentPointedOffer, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
+  const [commentFormData, setCommentFormData] = useState<CommentSendFormState>({
+    offerId: id,
+    rating: 0,
+    comment: ''
+  });
 
-  const handleListItemHover = (offerId: string) => {
-    const currentOffer = offers.find((offerElement) => offerElement.id === offerId);
+  useEffect(() => {
+    if (id) {
+      dispatch(getOfferAction(id));
+      dispatch(getCommentsAction(id));
+    }
+  }, [dispatch, id]);
 
-    setCurrentPointedOffer(currentOffer);
+  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
+
+  if (isOfferLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  if (!offer || !offersNearby || !comments || !city) {
+    return(
+      <NotFoundPage />
+    );
+  }
+
+  const handleListItemHover = (pointedOffer: Offer) => {
+    setCurrentPointedOffer(pointedOffer);
   };
 
   return(
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--offer">
         <section className="offer">
@@ -172,13 +161,16 @@ export function OfferPage(): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span></h2>
-                <CreateReviews reviews={offerReviews} />
-                <CommentSendForm сommentFormData={сommentFormData} setCommentFormData={setCommentFormData} />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+                <CreateReviews reviews={comments} />
+                {getToken()
+                  ?
+                  <CommentSendForm commentFormData={commentFormData} setCommentFormData={setCommentFormData} />
+                  : null}
               </section>
             </div>
           </div>
-          <Map className='offer__map map' city={city} offers={offersNearby} selectedOffer={currentPointedOffer}/>
+          <Map className='offer__map map' city={city} offers={offersNearby.concat(offer)} selectedOffer={currentPointedOffer}/>
         </section>
         <div className="container">
           <section className="near-places places">

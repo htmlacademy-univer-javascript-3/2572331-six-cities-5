@@ -1,10 +1,10 @@
-import { Offers } from '../../types/offer';
+import { Offer, Offers } from '../../types/offer';
 import { OfferCard } from './offerCard';
 import { OfferCardType } from './offerCardType';
 
 type OffersProps = {
   offers: Offers;
-  handleListItemHover: (itemId: string) => void;
+  handleListItemHover: (offer: Offer) => void;
   offerCardType: OfferCardType;
 }
 

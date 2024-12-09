@@ -1,32 +1,34 @@
-import { Review } from '../../types/review';
+import { Comment } from '../../types/comment';
 
 type ReviewProps = {
-  review: Review;
+  review: Comment;
 }
 
 export function CreateReview({review} : ReviewProps) : JSX.Element {
+  const reviewDate = new Date(review.date);
+
   return(
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={review.author.avatarUrl} width="54" height="54" alt="Reviews avatar"/>
+          <img className="reviews__avatar user__avatar" src={review.user.avatarUrl} width="54" height="54" alt="Reviews avatar"/>
         </div>
         <span className="reviews__user-name">
-          {review.author.name}
+          {review.user.name}
         </span>
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${Math.round(review.starsRating) * 20}%`}}></span>
+            <span style={{width: `${Math.round(review.rating) * 20}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
-          {review.textReview}
+          {review.comment}
         </p>
-        <time className="reviews__time" dateTime={`${review.date.getFullYear()}-${review.date.getMonth()}-${review.date.getDay()}`}>
-          {`${review.date.toLocaleString('default', { month: 'long' })} ${review.date.getFullYear()}`}
+        <time className="reviews__time" dateTime={`${reviewDate.getFullYear()}-${reviewDate.getMonth()}-${reviewDate.getDay()}`}>
+          {`${reviewDate.toLocaleString('default', { month: 'long' })} ${reviewDate.getFullYear()}`}
         </time>
       </div>
     </li>

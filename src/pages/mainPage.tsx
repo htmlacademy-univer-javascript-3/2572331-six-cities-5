@@ -31,10 +31,8 @@ export function MainPage(): JSX.Element {
     filteredOffers = getOffersByCityName(offers, newCity.name);
   };
 
-  const handleListItemHover = (offerId: string) => {
-    const currentOffer = offers.find((offer) => offer.id === offerId);
-
-    setCurrentPointedOffer(currentOffer);
+  const handleListItemHover = (pointedOffer: Offer) => {
+    setCurrentPointedOffer(pointedOffer);
   };
 
   const sortedFilteredOffers = SORTING_ALGORITHMS[sortingIndex].action(filteredOffers);
