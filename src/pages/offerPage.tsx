@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { CreateCommentSendForm } from '../components/offer_page_components/commentSendForm';
+import { CommentSendForm } from '../components/offer_page_components/comment-send-form';
 import { CreateReviews } from '../components/offer_page_components/reviews';
-import { CommentSendFormState } from '../types/commentSendFormState';
+import { CommentSendFormState } from '../types/comment-send-form-state';
 import { Offer } from '../types/offer';
 import { useParams } from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
@@ -174,7 +174,7 @@ export function OfferPage(): JSX.Element {
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span></h2>
                 <CreateReviews reviews={offerReviews} />
-                <CreateCommentSendForm сommentFormData={сommentFormData} setCommentFormData={setCommentFormData} />
+                <CommentSendForm сommentFormData={сommentFormData} setCommentFormData={setCommentFormData} />
               </section>
             </div>
           </div>

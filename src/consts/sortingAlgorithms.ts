@@ -1,5 +1,5 @@
 import { Offers } from '../types/offer';
-import { SortingAlgorithms } from '../types/sortingAlgorithm';
+import { SortingAlgorithms } from '../types/sorting-algorithm';
 
 export const SORTING_ALGORITHMS: SortingAlgorithms = [
   {

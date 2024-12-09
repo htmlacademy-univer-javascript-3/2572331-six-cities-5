@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
-import { CommentSendFormState } from '../../types/commentSendFormState';
+import { CommentSendFormState } from '../../types/comment-send-form-state';
 
 type CommentSendFormProps = {
   сommentFormData: CommentSendFormState;
   setCommentFormData: Dispatch<SetStateAction<CommentSendFormState>>;
 }
 
-export function CreateCommentSendForm({сommentFormData, setCommentFormData} : CommentSendFormProps) : JSX.Element {
+export function CommentSendForm({сommentFormData, setCommentFormData} : CommentSendFormProps) : JSX.Element {
   const handleFieldChange = (evt: { target: { name: string; value: number | string } }) => {
     const {name, value} = evt.target;
     setCommentFormData({...сommentFormData, [name]: value});
