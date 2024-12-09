@@ -9,10 +9,8 @@ export function FavoritesPage(): JSX.Element {
 
   const [, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
 
-  const handleListItemHover = (offerId: string) => {
-    const currentOffer = offers.find((offer) => offer.id === offerId);
-
-    setCurrentPointedOffer(currentOffer);
+  const handleListItemHover = (pointedOffer: Offer) => {
+    setCurrentPointedOffer(pointedOffer);
   };
 
   const cities = [...new Set(offers.map(({ city: city }) => city.name))];
