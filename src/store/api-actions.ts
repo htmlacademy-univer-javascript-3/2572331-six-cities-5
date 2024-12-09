@@ -6,7 +6,7 @@ import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../consts/con
 import { requireAuthorization, setError, setOffers, setOffersDataLoadingStatus } from './action';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
-import { dropToken, saveToken } from '../services/token';
+import { dropToken, saveToken } from '../services/auth-storage';
 
 export const clearErrorAction = createAsyncThunk(
   'app/clearError',
@@ -56,7 +56,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(token);
+    saveToken(token, email);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   },
 );

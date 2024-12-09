@@ -1,5 +1,5 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
-import { getToken } from './token';
+import { getToken } from './auth-storage';
 import { StatusCodes } from 'http-status-codes';
 import { processErrorHandle } from './process-error-handle';
 
