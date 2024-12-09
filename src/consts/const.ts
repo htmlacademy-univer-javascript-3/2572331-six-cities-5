@@ -23,7 +23,10 @@ export enum AuthorizationStatus {
 }
 
 export enum APIRoute {
-  GetOffers = '/offers',
+  Offers = '/offers',
+  OffersPrefix = '/offers/',
+  CommentsPrefix = '/comments/',
+  GetOffersNearbySuffix = '/nearby',
   Login = '/login',
   Logout = '/logout',
 }

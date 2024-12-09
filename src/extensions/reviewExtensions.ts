@@ -1,6 +1,6 @@
 import { REVIEWS_PAGE_SIZE } from '../consts/const';
-import { Reviews } from '../types/review';
+import { Comments } from '../types/comment';
 
-export function getReviewsByOffer(reviews: Reviews, offerId: string, page: number): Reviews {
+export function getReviewsByOffer(reviews: Comments, offerId: string, page: number): Comments {
   return reviews.filter((reviewsElement) => reviewsElement.offerId === offerId).slice(REVIEWS_PAGE_SIZE * page, REVIEWS_PAGE_SIZE * page + 10);
 }

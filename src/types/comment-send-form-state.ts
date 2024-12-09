@@ -1,4 +1,5 @@
 export type CommentSendFormState = {
+  offerId: string | undefined;
   rating: number;
-  review: string;
+  comment: string;
 };

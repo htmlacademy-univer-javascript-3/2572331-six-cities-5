@@ -4,13 +4,13 @@ import { OfferCardType } from './offerCardType';
 
 type OfferProps = {
   offer: Offer;
-  handleListItemHover: (itemId: string) => void;
+  handleListItemHover: (offer: Offer) => void;
   offerCardType: OfferCardType;
 }
 
 export function OfferCard({offer, handleListItemHover, offerCardType} : OfferProps) : JSX.Element {
   return(
-    <article className={`${offerCardType.className}__card place-card`} onMouseOver={() => handleListItemHover(offer.id)}>
+    <article className={`${offerCardType.className}__card place-card`} onMouseOver={() => handleListItemHover(offer)}>
       {offer.isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
