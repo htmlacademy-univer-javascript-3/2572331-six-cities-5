@@ -8,6 +8,7 @@ import { getToken } from '../services/auth-storage';
 import { AppRoute } from '../consts/const';
 import { CITIES } from '../consts/cities';
 import { getFavorites } from '../store/favorites-data/selectors';
+import { FavoritesEmptyPage } from './favorites-empty-page';
 
 export function FavoritesPage(): JSX.Element {
   const offers = useAppSelector(getFavorites);
@@ -17,6 +18,10 @@ export function FavoritesPage(): JSX.Element {
   const handleListItemHover = (pointedOffer: Offer) => {
     setCurrentPointedOffer(pointedOffer);
   };
+
+  if (offers.length === 0) {
+    return(<FavoritesEmptyPage />);
+  }
 
   const cityNames = [...new Set(offers.map(({ city: city }) => city.name))];
   const cities = CITIES.filter((cityToFilter) => cityNames.includes(cityToFilter.name));
