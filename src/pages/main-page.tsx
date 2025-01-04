@@ -15,6 +15,7 @@ import { getOffers } from '../store/offers-data/selectors';
 import { getCity } from '../store/main-data/selectors';
 import { changeCity } from '../store/main-data/actions';
 import { getToken } from '../services/auth-storage';
+import { MainEmptyPage } from './main-empty-page';
 
 export function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -39,6 +40,10 @@ export function MainPage(): JSX.Element {
   };
 
   const sortedFilteredOffers = SORTING_ALGORITHMS[sortingIndex].action(filteredOffers);
+
+  if (offers.length === 0) {
+    return(<MainEmptyPage handleCityChange={handleCityChange}/>);
+  }
 
   return(
     <div className="page page--gray page--main">

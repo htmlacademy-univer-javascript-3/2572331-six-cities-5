@@ -4,10 +4,11 @@ import { App } from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { ErrorMessage } from './components/error-message/error-message';
-import { checkAuthAction, getOffersAction } from './store/api-actions';
+import { checkAuthAction, getFavoritesAction, getOffersAction } from './store/api-actions';
 
 store.dispatch(getOffersAction());
 store.dispatch(checkAuthAction());
+store.dispatch(getFavoritesAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

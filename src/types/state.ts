@@ -27,6 +27,12 @@ export type MainData = {
   error: string | null;
 };
 
+export type FavoritesData = {
+  favorites: Offers;
+  areFavoritesLoading: boolean;
+  didFavoritesSendSuccessfully: boolean | null;
+}
+
 export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
