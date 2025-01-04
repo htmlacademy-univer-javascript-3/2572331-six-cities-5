@@ -13,6 +13,8 @@ import { setComments, setCommentSendingStatus, setCommentSendingSuccessStatus, s
 import { setError } from './main-data/actions';
 import { store } from '.';
 import { setOffers, setOffersLoadingStatus } from './offers-data/actions';
+import { setFavorites, setFavoritesLoadingStatus, setFavoritesSendingSuccessStatus } from './favorites-data/actions';
+import { FavoritesSendState } from '../types/favorites-send-state';
 
 export const clearErrorAction = createAsyncThunk(
   'app/clearError',
@@ -59,6 +61,44 @@ export const getOfferAction = createAsyncThunk<void, string, {
   },
 );
 
+export const getFavoritesAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/getFavorites',
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      dispatch(setFavoritesLoadingStatus(true));
+      const { data } = await api.get<Offers>(APIRoute.Favorite);
+      dispatch(setFavorites(data));
+    } finally {
+      dispatch(setFavoritesLoadingStatus(false));
+    }
+  },
+);
+
+export const addFavoriteAction = createAsyncThunk<void, FavoritesSendState, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/addComment',
+  async ({offerId, status}, {dispatch, extra: api}) => {
+    try {
+      await api.post<Comment>(`${APIRoute.FavoritePrefix}${offerId}/${status}`);
+
+      if (offerId) {
+        dispatch(getFavoritesAction());
+      }
+      dispatch(setFavoritesSendingSuccessStatus(true));
+    } catch (error) {
+      dispatch(setFavoritesSendingSuccessStatus(false));
+      dispatch(setError('Что-то пошло не так, попробуйте снова'));
+    }
+  },
+);
+
 export const getCommentsAction = createAsyncThunk<void, string, {
   dispatch: AppDispatch;
   state: State;
@@ -76,7 +116,7 @@ export const addCommentAction = createAsyncThunk<void, CommentSendFormState, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/getOffer',
+  'data/addComment',
   async ({offerId, comment, rating}, {dispatch, extra: api}) => {
     dispatch(setCommentSendingStatus(true));
     try {
@@ -87,6 +127,7 @@ export const addCommentAction = createAsyncThunk<void, CommentSendFormState, {
       }
       dispatch(setCommentSendingSuccessStatus(true));
     } catch (error) {
+      dispatch(setCommentSendingSuccessStatus(false));
       dispatch(setError('Что-то пошло не так, попробуйте отправить комментарий снова'));
     } finally {
       dispatch(setCommentSendingStatus(false));
@@ -114,7 +155,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   async ({login: email, password}, {dispatch, extra: api}) => {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token, email);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
   },
 );
 
@@ -125,8 +166,8 @@ export const logoutAction = createAsyncThunk<void, undefined, {
 }>(
   'user/logout',
   async (_arg, {dispatch, extra: api}) => {
-    await api.delete(APIRoute.Logout);
     dropToken();
+    await api.delete(APIRoute.Logout);
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   },
 );

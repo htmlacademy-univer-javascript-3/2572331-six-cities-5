@@ -1,6 +1,9 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { OfferCardType } from './offer-card-type';
+import { useState } from 'react';
+import { addFavoriteAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks';
 
 type OfferProps = {
   offer: Offer;
@@ -9,6 +12,20 @@ type OfferProps = {
 }
 
 export function OfferCard({offer, handleListItemHover, offerCardType} : OfferProps) : JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const [isFavorite, setFavorite] = useState(offer.isFavorite);
+
+  const handleAddToBookmarks = () => {
+    dispatch(addFavoriteAction({offerId: offer.id, status: 1}));
+    setFavorite(true);
+  };
+
+  const handleRemoveFromBookmarks = () => {
+    dispatch(addFavoriteAction({offerId: offer.id, status: 0}));
+    setFavorite(false);
+  };
+
   return(
     <article className={`${offerCardType.className}__card place-card`} onMouseOver={() => handleListItemHover(offer)}>
       {offer.isPremium ?
@@ -27,15 +44,15 @@ export function OfferCard({offer, handleListItemHover, offerCardType} : OfferPro
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          {offer.isFavorite ?
-            <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          {isFavorite ?
+            <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button" onClick={handleRemoveFromBookmarks}>
               <svg className="place-card__bookmark-icon" width="18" height="19">
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>
               <span className="visually-hidden">In bookmarks</span>
             </button>
             :
-            <button className="place-card__bookmark-button button" type="button">
+            <button className="place-card__bookmark-button button" type="button" onClick={handleAddToBookmarks}>
               <svg className="place-card__bookmark-icon" width="18" height="19">
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>

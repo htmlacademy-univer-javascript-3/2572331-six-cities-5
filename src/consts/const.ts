@@ -27,6 +27,8 @@ export enum APIRoute {
   OffersPrefix = '/offers/',
   CommentsPrefix = '/comments/',
   GetOffersNearbySuffix = '/nearby',
+  Favorite = '/favorite',
+  FavoritePrefix = '/favorite/',
   Login = '/login',
   Logout = '/logout',
 }
@@ -35,5 +37,6 @@ export enum NameSpace {
   UserAuth = 'USER_AUTH',
   Offers = 'OFFERS',
   Offer = 'OFFER',
-  Main = 'MAIN'
+  Main = 'MAIN',
+  Favorites = 'FAVORITES'
 }

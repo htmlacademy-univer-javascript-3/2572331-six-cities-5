@@ -3,10 +3,14 @@ import { OfferCards } from '../components/offer-cards/offer-cards';
 import { Offer } from '../types/offer';
 import { OfferCardType } from '../components/offer-cards/offer-card-type';
 import { useAppSelector } from '../hooks';
-import { getOffers } from '../store/offers-data/selectors';
+import Header from '../components/header/header';
+import { getToken } from '../services/auth-storage';
+import { AppRoute } from '../consts/const';
+import { CITIES } from '../consts/cities';
+import { getFavorites } from '../store/favorites-data/selectors';
 
 export function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector(getOffers).filter((offer) => offer.isFavorite);
+  const offers = useAppSelector(getFavorites);
 
   const [, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
 
@@ -14,38 +18,12 @@ export function FavoritesPage(): JSX.Element {
     setCurrentPointedOffer(pointedOffer);
   };
 
-  const cities = [...new Set(offers.map(({ city: city }) => city.name))];
+  const cityNames = [...new Set(offers.map(({ city: city }) => city.name))];
+  const cities = CITIES.filter((cityToFilter) => cityNames.includes(cityToFilter.name));
 
   return(
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header jwtToken={getToken()} />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
@@ -53,15 +31,15 @@ export function FavoritesPage(): JSX.Element {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {cities.map(((city) => (
-                <li className="favorites__locations-items" key={city}>
+                <li className="favorites__locations-items" key={city.name}>
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{city}</span>
+                      <a className="locations__item-link" href={AppRoute.Root}>
+                        <span>{city.name}</span>
                       </a>
                     </div>
                   </div>
-                  <OfferCards offers={offers.filter((offer) => offer.city.name === city)} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.FAVORITES_PAGE}/>
+                  <OfferCards offers={offers.filter((offer) => offer.city.name === city.name)} handleListItemHover={handleListItemHover} offerCardType={OfferCardType.FAVORITES_PAGE}/>
                 </li>)))}
             </ul>
           </section>

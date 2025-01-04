@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '../hooks';
-import { loginAction } from '../store/api-actions';
+import { getFavoritesAction, loginAction } from '../store/api-actions';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../consts/const';
 import { getToken } from '../services/auth-storage';
@@ -24,6 +24,7 @@ export function LoginPage(): JSX.Element {
         password: passwordRef.current.value
       }));
 
+      dispatch(getFavoritesAction());
       setToken(getToken());
     }
   };
