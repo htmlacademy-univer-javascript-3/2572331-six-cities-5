@@ -2,6 +2,7 @@ import { Dispatch, FormEvent, SetStateAction } from 'react';
 import { CommentSendFormState } from '../../types/comment-send-form-state';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addCommentAction } from '../../store/api-actions';
+import { getCommentSendingStatus } from '../../store/offer-data/selectors';
 
 type CommentSendFormProps = {
   commentFormData: CommentSendFormState;
@@ -11,7 +12,7 @@ type CommentSendFormProps = {
 export function CommentSendForm({commentFormData: commentFormData, setCommentFormData} : CommentSendFormProps) : JSX.Element {
   const dispatch = useAppDispatch();
 
-  const isCommentSending = useAppSelector((state) => state.isCommentSending);
+  const isCommentSending = useAppSelector(getCommentSendingStatus);
 
   const handleFieldChange = (event: { target: { name: string; value: number | string } }) => {
     const {name, value} = event.target;

@@ -1,6 +1,6 @@
 import { Offer, Offers } from '../../types/offer';
-import { OfferCard } from './offerCard';
-import { OfferCardType } from './offerCardType';
+import { OfferCard } from './offer-card';
+import { OfferCardType } from './offer-card-type';
 
 type OffersProps = {
   offers: Offers;

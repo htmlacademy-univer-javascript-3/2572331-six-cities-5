@@ -1,46 +1,57 @@
 import { useEffect, useState } from 'react';
-import { CommentSendForm } from '../components/offer_page_components/comment-send-form';
-import { CreateReviews } from '../components/offer_page_components/reviews';
+import { CommentSendForm } from '../components/offer-page-components/comment-send-form';
 import { CommentSendFormState } from '../types/comment-send-form-state';
 import { Offer } from '../types/offer';
 import { useParams } from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
 import Map from '../components/map/map';
-import { OfferCards } from '../components/offerCards/offerCards';
-import { OfferCardType } from '../components/offerCards/offerCardType';
+import { OfferCards } from '../components/offer-cards/offer-cards';
+import { OfferCardType } from '../components/offer-cards/offer-card-type';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { Header } from '../components/header/header';
-import { getCommentsAction, getOfferAction } from '../store/api-actions';
+import Header from '../components/header/header';
+import { getOfferAction } from '../store/api-actions';
 import { LoadingScreen } from './loading-screen';
-import { NotFoundPage } from './notFoundPage';
+import { NotFoundPage } from './not-found-page';
 import { getToken } from '../services/auth-storage';
+import { getComments, getCommentSendingSuccessStatus, getCurrentOffer, getOfferLoadingStatus } from '../store/offer-data/selectors';
+import Reviews from '../components/offer-page-components/reviews';
+import { setCommentSendingSuccessStatus } from '../store/offer-data/actions';
 
 export function OfferPage(): JSX.Element {
   const { id } = useParams();
 
   const dispatch = useAppDispatch();
 
-  const offerFullInfo = useAppSelector((state) => state.currentOffer);
+  const offerFullInfo = useAppSelector(getCurrentOffer);
   const offer = offerFullInfo?.offer;
   const offersNearby = offerFullInfo?.offersNearby.slice(0, 3);
-  const comments = offerFullInfo?.comments;
+  const comments = useAppSelector(getComments);
   const city = offer?.city;
 
-  const [currentPointedOffer, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
-  const [commentFormData, setCommentFormData] = useState<CommentSendFormState>({
+  const newComment : CommentSendFormState = {
     offerId: id,
     rating: 0,
     comment: ''
-  });
+  };
+  const [currentPointedOffer, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
+  const [commentFormData, setCommentFormData] = useState<CommentSendFormState>(newComment);
 
   useEffect(() => {
     if (id) {
       dispatch(getOfferAction(id));
-      dispatch(getCommentsAction(id));
     }
   }, [dispatch, id]);
 
-  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
+  const isOfferLoading = useAppSelector(getOfferLoadingStatus);
+  const didCommentSendSuccessfully = useAppSelector(getCommentSendingSuccessStatus);
+
+  if (didCommentSendSuccessfully !== null) {
+    if (didCommentSendSuccessfully) {
+      setCommentFormData(newComment);
+    }
+
+    dispatch(setCommentSendingSuccessStatus(null));
+  }
 
   if (isOfferLoading) {
     return (
@@ -60,7 +71,7 @@ export function OfferPage(): JSX.Element {
 
   return(
     <div className="page">
-      <Header />
+      <Header jwtToken={getToken()}/>
 
       <main className="page__main page__main--offer">
         <section className="offer">
@@ -162,7 +173,7 @@ export function OfferPage(): JSX.Element {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <CreateReviews reviews={comments} />
+                <Reviews reviews={comments} />
                 {getToken()
                   ?
                   <CommentSendForm commentFormData={commentFormData} setCommentFormData={setCommentFormData} />

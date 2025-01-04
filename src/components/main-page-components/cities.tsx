@@ -1,4 +1,6 @@
+import { memo } from 'react';
 import { useAppSelector } from '../../hooks';
+import { getCity } from '../../store/main-data/selectors';
 import { Cities, City } from '../../types/city';
 
 type CitiesProps = {
@@ -6,8 +8,8 @@ type CitiesProps = {
   handleCityChange: (newCity: City) => void;
 }
 
-export function CitiesPanel({cities, handleCityChange} : CitiesProps) : JSX.Element {
-  const currentCity = useAppSelector((state) => state.city);
+export function NotMemoizedCitiesPanel({cities, handleCityChange} : CitiesProps) : JSX.Element {
+  const currentCity = useAppSelector(getCity);
 
   return(
     <div className="tabs">
@@ -27,3 +29,6 @@ export function CitiesPanel({cities, handleCityChange} : CitiesProps) : JSX.Elem
     </div>
   );
 }
+
+const CitiesPanel = memo(NotMemoizedCitiesPanel);
+export default CitiesPanel;

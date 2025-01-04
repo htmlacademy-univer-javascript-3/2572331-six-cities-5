@@ -4,7 +4,7 @@ type ReviewProps = {
   review: Comment;
 }
 
-export function CreateReview({review} : ReviewProps) : JSX.Element {
+export function Review({review} : ReviewProps) : JSX.Element {
   const reviewDate = new Date(review.date);
 
   return(

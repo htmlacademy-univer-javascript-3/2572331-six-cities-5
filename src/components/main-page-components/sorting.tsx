@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SORTING_ALGORITHMS } from '../../consts/sortingAlgorithms';
+import { SORTING_ALGORITHMS } from '../../consts/sorting-algorithms';
 
 type SortingProps = {
   sortingIndex: number;

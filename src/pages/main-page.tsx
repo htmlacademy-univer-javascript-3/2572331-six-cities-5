@@ -1,23 +1,26 @@
 import { useState } from 'react';
-import { OfferCards } from '../components/offerCards/offerCards';
+import { OfferCards } from '../components/offer-cards/offer-cards';
 import { Offer } from '../types/offer';
 import { City } from '../types/city';
 import Map from '../components/map/map';
-import { OfferCardType } from '../components/offerCards/offerCardType';
+import { OfferCardType } from '../components/offer-cards/offer-card-type';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { changeCity } from '../store/action';
-import { CitiesPanel } from '../components/main_page_components/cities';
+import CitiesPanel from '../components/main-page-components/cities';
 import { CITIES } from '../consts/cities';
-import { getOffersByCityName } from '../extensions/offerExtensions';
-import { Sorting } from '../components/main_page_components/sorting';
-import { SORTING_ALGORITHMS } from '../consts/sortingAlgorithms';
-import { Header } from '../components/header/header';
+import { getOffersByCityName } from '../extensions/offer-extensions';
+import { Sorting } from '../components/main-page-components/sorting';
+import { SORTING_ALGORITHMS } from '../consts/sorting-algorithms';
+import Header from '../components/header/header';
+import { getOffers } from '../store/offers-data/selectors';
+import { getCity } from '../store/main-data/selectors';
+import { changeCity } from '../store/main-data/actions';
+import { getToken } from '../services/auth-storage';
 
 export function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const offers = useAppSelector((state) => state.offers);
-  let city = useAppSelector((state) => state.city);
+  const offers = useAppSelector(getOffers);
+  let city = useAppSelector(getCity);
 
   let filteredOffers = getOffersByCityName(offers, city.name);
 
@@ -39,7 +42,7 @@ export function MainPage(): JSX.Element {
 
   return(
     <div className="page page--gray page--main">
-      <Header />
+      <Header jwtToken={getToken()}/>
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
