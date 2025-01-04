@@ -1,13 +1,21 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { memo } from 'react';
 import { AppRoute } from '../../consts/const';
 import { useAppDispatch } from '../../hooks';
-import { getEmail, getToken } from '../../services/auth-storage';
+import { getUserEmail, Token } from '../../services/auth-storage';
 import { logoutAction } from '../../store/api-actions';
 
-export function Header() : JSX.Element {
-  const dispatch = useAppDispatch();
+type HeaderProps = {
+  jwtToken: Token;
+}
 
-  const handleLogout = () => {
-    dispatch(logoutAction());
+function NotMemoizedHeader({jwtToken} : HeaderProps) : JSX.Element {
+  const dispatch = useAppDispatch();
+  const email = getUserEmail();
+
+  const handleLogout = async () => {
+    await dispatch(logoutAction());
+    window.location.reload();
   };
 
   return(
@@ -20,14 +28,14 @@ export function Header() : JSX.Element {
             </a>
           </div>
           <nav className="header__nav">
-            {getToken()
+            {jwtToken
               ?
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <a className="header__nav-link header__nav-link--profile" href="#">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">{getEmail()}</span>
+                    <span className="header__user-name user__name">{email}</span>
                     <span className="header__favorite-count">3</span>
                   </a>
                 </li>
@@ -51,3 +59,6 @@ export function Header() : JSX.Element {
     </header>
   );
 }
+
+const Header = memo(NotMemoizedHeader, (oldProps, newProps) => oldProps.jwtToken !== newProps.jwtToken);
+export default Header;

@@ -30,3 +30,10 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export enum NameSpace {
+  UserAuth = 'USER_AUTH',
+  Offers = 'OFFERS',
+  Offer = 'OFFER',
+  Main = 'MAIN'
+}

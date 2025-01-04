@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { OfferCards } from '../components/offerCards/offerCards';
+import { OfferCards } from '../components/offer-cards/offer-cards';
 import { Offer } from '../types/offer';
-import { OfferCardType } from '../components/offerCards/offerCardType';
+import { OfferCardType } from '../components/offer-cards/offer-card-type';
 import { useAppSelector } from '../hooks';
+import { getOffers } from '../store/offers-data/selectors';
 
 export function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers).filter((offer) => offer.isFavorite);
+  const offers = useAppSelector(getOffers).filter((offer) => offer.isFavorite);
 
   const [, setCurrentPointedOffer] = useState<Offer | undefined>(undefined);
 
